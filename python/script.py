@@ -1,20 +1,21 @@
-from xtea3 import *
+from xycrypto.ciphers import TripleDES_OFB
+import binascii
 import base64
+from Crypto import Random
 
-key = b"bQeThVmYq3t6w9z$"  # Never use this
-text = b"SupeCaliCaliCali"
-iv = b"12345678"
-x = new(key, mode=MODE_ECB, IV=iv)
-c = x.encrypt(text)
-text == x.decrypt(c)
-msg = base64.b64encode((str(len(iv))+iv.decode('utf-8')).encode('utf-8')+c)
-print(msg)
-print(base64.b64decode(msg))
+key = '3834343434443456'
+iv = '1234123412341234'
+plaintext = 'SupErCaliFRAGIlisTICOESpirALiDOsos'
+cipher = TripleDES_OFB(binascii.a2b_hex(key.encode('utf-8')), iv= binascii.a2b_hex(iv.encode('utf-8')))
+msg = cipher.encrypt(plaintext.encode('utf-8'))
 
-msgF = '"'+msg.decode('utf-8')+'"'
+msgF = '"'+base64.b64encode(msg).decode('utf-8')+'"'
+keyF = '"'+key+'"'
+ivF = '"'+iv+'"'
+print(msgF)
 html = open('../index.html','w')
 mensaje = """<!DOCTYPE html>
-<html lang="es">
+<html lang="es" style="background-color: black; color: white;">
     <head>
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -24,10 +25,10 @@ mensaje = """<!DOCTYPE html>
     <body>
         <p>Este sitio contiene un mensaje secreto</p>
         <div class="algorithm" id="""+msgF+"""></div>
+        <div class="iv" id="""+ivF+"""></div>
+        <div class="key" id="""+keyF+"""></div>
     </body>
 </html>
 """
 html.write(mensaje)
 html.close()
-
-
