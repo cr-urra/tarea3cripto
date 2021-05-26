@@ -1,18 +1,15 @@
 from xycrypto.ciphers import TripleDES_OFB
 import binascii
-import base64
-from Crypto import Random
 
-key = '3834343434443456'
+key = '3834343434443451'
 iv = '1234123412341234'
-plaintext = 'SupErCaliFRAGIlisTICOESpirALiDOsos'
-cipher = TripleDES_OFB(binascii.a2b_hex(key.encode('utf-8')), iv= binascii.a2b_hex(iv.encode('utf-8')))
+plaintext = 'Aloha MADAFAKAAAA'
+cipher = TripleDES_OFB(binascii.a2b_hex(key), iv= binascii.a2b_hex(iv))
 msg = cipher.encrypt(plaintext.encode('utf-8'))
 
-msgF = '"'+base64.b64encode(msg).decode('utf-8')+'"'
+msgF = '"'+binascii.b2a_base64(msg).decode('utf-8')+'"'
 keyF = '"'+key+'"'
 ivF = '"'+iv+'"'
-print(msgF)
 html = open('../index.html','w')
 mensaje = """<!DOCTYPE html>
 <html lang="es" style="background-color: black; color: white;">
@@ -24,7 +21,7 @@ mensaje = """<!DOCTYPE html>
     </head>
     <body>
         <p>Este sitio contiene un mensaje secreto</p>
-        <div class="algorithm" id="""+msgF+"""></div>
+        <div class="3DES" id="""+msgF+"""></div>
         <div class="iv" id="""+ivF+"""></div>
         <div class="key" id="""+keyF+"""></div>
     </body>
