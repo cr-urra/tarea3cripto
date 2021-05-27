@@ -1,11 +1,18 @@
 from xycrypto.ciphers import TripleDES_OFB
 import binascii
 
-key = '3834343434443451'
-iv = '1234123412341234'
-plaintext = 'Aloha MADAFAKAAAA'
+#Parámetros de entrada
+
+key = '3834343434443451' #Llave secreta (Modificable)
+iv = '1234123412341234' #Vector de inicialización (Modificable)
+plaintext = 'Aloha MADAFAKAAAA' # Texto plano a encriptar (Modificable)
+
+#Cifrado
+
 cipher = TripleDES_OFB(binascii.a2b_hex(key), iv= binascii.a2b_hex(iv))
 msg = cipher.encrypt(plaintext.encode('utf-8'))
+
+#Generación de HTML
 
 msgF = '"'+binascii.b2a_base64(msg).decode('utf-8')+'"'
 keyF = '"'+key+'"'
